@@ -1,12 +1,12 @@
-#ifndef IZ_1_ARRAYOFCURRENCIES_H
-#define IZ_1_ARRAYOFCURRENCIES_H
+#ifndef IZ_1_ARRAY_OF_CURRENCIES_H
+#define IZ_1_ARRAY_OF_CURRENCIES_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Currency.h"
+#include "currency.h"
 #include "constants.h"
-#include "../Errors/error_codes.h"
+#include "Errors/error_codes.h"
 
 
 typedef struct ArrayOfCurrencies {
@@ -22,4 +22,4 @@ Error appendIntoArrayOfCurrencies(ArrayOfCurrencies *arr, const Currency *curren
 
 size_t find_currency_index(const ArrayOfCurrencies *arr, const Currency *currency);
 
-#endif //IZ_1_ARRAYOFCURRENCIES_H
+#endif //IZ_1_ARRAY_OF_CURRENCIES_H

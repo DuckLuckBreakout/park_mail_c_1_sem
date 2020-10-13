@@ -1,4 +1,4 @@
-#include "Offer.h"
+#include "offer.h"
 
 Error inputOffer(Offer *elem){
     Error err = SUCCESS;

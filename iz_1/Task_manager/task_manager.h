@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#include "../Errors/error_codes.h"
-#include "../ExchangeOfCurrency/CurrencyExchangeRates.h"
+#include "Errors/error_codes.h"
+#include "Exchange_of_currency/currency_exchange_rates.h"
 
 Error task_manager();
 

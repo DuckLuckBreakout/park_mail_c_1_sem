@@ -1,6 +1,6 @@
 #include <cmath>
 #include "gtest/gtest.h"
-#include "../TaskManager/task_manager.h"
+#include "Task_manager/task_manager.h"
 
 
 TEST(CurrencyPair, isEqualCurrencyPair) {

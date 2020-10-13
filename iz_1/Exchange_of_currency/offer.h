@@ -1,7 +1,7 @@
 #ifndef IZ_1_OFFER_H
 #define IZ_1_OFFER_H
 
-#include "CurrencyPair.h"
+#include "currency_pair.h"
 
 typedef struct Offer {
     char bank[10];

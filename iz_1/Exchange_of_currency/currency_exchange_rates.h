@@ -1,9 +1,9 @@
-#ifndef IZ_1_CURRENCYEXCHANGERATES_H
-#define IZ_1_CURRENCYEXCHANGERATES_H
+#ifndef IZ_1_CURRENCY_EXCHANGE_RATES_H
+#define IZ_1_CURRENCY_EXCHANGE_RATES_H
 
 #include <math.h>
-#include "ArrayOfCurrencies.h"
-#include "ArrayOfOffers.h"
+#include "array_of_currencies.h"
+#include "array_of_offers.h"
 
 typedef struct CurrencyExchangeRates {
     Offer **data;
@@ -18,4 +18,4 @@ Error inputCurrencyExchangeRates(CurrencyExchangeRates *data, size_t number_of_o
 
 Error find_best_exchange_rate(const CurrencyExchangeRates *data, const CurrencyPair *currencyPair,
                               ArrayOfOffers *strategy, double *best_exchange_rate);
-#endif //IZ_1_CURRENCYEXCHANGERATES_H
+#endif //IZ_1_CURRENCY_EXCHANGE_RATES_H

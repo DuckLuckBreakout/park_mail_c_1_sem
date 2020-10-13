@@ -1,4 +1,4 @@
-#include "ArrayOfCurrencies.h"
+#include "array_of_currencies.h"
 
 Error createArrayOfCurrencies(ArrayOfCurrencies *arr) {
     Error err = SUCCESS;

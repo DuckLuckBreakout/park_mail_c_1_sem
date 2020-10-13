@@ -1,4 +1,4 @@
-#include "CurrencyPair.h"
+#include "currency_pair.h"
 
 Error inputCurrencyPair(CurrencyPair *currency_pair) {
     char tmp[4];

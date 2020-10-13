@@ -1,4 +1,4 @@
-#include "ArrayOfOffers.h"
+#include "array_of_offers.h"
 
 Error createArrayOfOffers(ArrayOfOffers *arr) {
     Error err = SUCCESS;

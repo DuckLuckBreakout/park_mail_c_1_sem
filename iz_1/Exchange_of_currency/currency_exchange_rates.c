@@ -1,4 +1,4 @@
-#include "CurrencyExchangeRates.h"
+#include "currency_exchange_rates.h"
 
 #define SIZE 100
 

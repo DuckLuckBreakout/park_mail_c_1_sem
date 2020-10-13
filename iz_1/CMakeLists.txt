@@ -8,22 +8,22 @@ set(CMAKE_CXX_STANDARD 14)
 set (HEADERS
         Errors/error_codes.h
         Errors/error_message.h
-        ExchangeOfCurrency/Currency.h
-        ExchangeOfCurrency/CurrencyPair.h
-        ExchangeOfCurrency/ArrayOfCurrencies.h
-        ExchangeOfCurrency/Offer.h
-        ExchangeOfCurrency/ArrayOfOffers.h
-        ExchangeOfCurrency/CurrencyExchangeRates.h
-        TaskManager/task_manager.h)
+        Exchange_of_currency/currency.h
+        Exchange_of_currency/currency_pair.h
+        Exchange_of_currency/array_of_currencies.h
+        Exchange_of_currency/offer.h
+        Exchange_of_currency/array_of_offers.h
+        Exchange_of_currency/currency_exchange_rates.h
+        Task_manager/task_manager.h)
 
 set (SOURCES
         Errors/error_message.c
-        ExchangeOfCurrency/CurrencyPair.c
-        ExchangeOfCurrency/ArrayOfCurrencies.c
-        ExchangeOfCurrency/Offer.c
-        ExchangeOfCurrency/ArrayOfOffers.c
-        ExchangeOfCurrency/CurrencyExchangeRates.c
-        TaskManager/task_manager.c)
+        Exchange_of_currency/currency_pair.c
+        Exchange_of_currency/array_of_currencies.c
+        Exchange_of_currency/offer.c
+        Exchange_of_currency/array_of_offers.c
+        Exchange_of_currency/currency_exchange_rates.c
+        Task_manager/task_manager.c)
 
 
 ##############################
@@ -72,3 +72,4 @@ elseif (CMAKE_BUILD_TYPE MATCHES Release)
             ${SOURCES})
 
 endif ()
+target_include_directories(${PROJECT} PRIVATE "${PROJECT_SOURCE_DIR}")

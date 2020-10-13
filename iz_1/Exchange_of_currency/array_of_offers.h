@@ -1,8 +1,8 @@
-#ifndef IZ_1_ARRAYOFOFFERS_H
-#define IZ_1_ARRAYOFOFFERS_H
+#ifndef IZ_1_ARRAY_OF_OFFERS_H
+#define IZ_1_ARRAY_OF_OFFERS_H
 
 #include <stdlib.h>
-#include "Offer.h"
+#include "offer.h"
 #include "constants.h"
 
 
@@ -17,4 +17,4 @@ Error deleteArrayOfOffers(ArrayOfOffers *arr);
 Error outputArrayOfOffers(ArrayOfOffers *arr);
 Error resizeArrayOfOffers(ArrayOfOffers *arr, size_t new_size);
 Error appendIntoArrayOfOffers(ArrayOfOffers *arr, Offer *offer);
-#endif //IZ_1_ARRAYOFOFFERS_H
+#endif //IZ_1_ARRAY_OF_OFFERS_H
