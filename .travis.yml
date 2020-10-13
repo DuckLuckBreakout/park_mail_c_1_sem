@@ -14,13 +14,9 @@ addons:
     packages: lcov
 
 install:
-  - echo INSTALLING DEPENDENCES
-  # скрипт настройки среды и установки зависимостей:
   - source ci/travis/install-linux.sh
 
 script:
-  - ls
-  - cd iz_1
-  - cmake -DCMAKE_BUILD_TYPE=Test ./
+  - cmake -DCMAKE_BUILD_TYPE=Test ./iz_1/
   - make
-  - valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./iz_1
+  - valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./iz_1/iz_1
