@@ -1,19 +1,19 @@
 #include "currency_exchange_rates.h"
 
-error create_currency_exchange_rates(currency_exchange_rates *data) {
-    currency_exchange_rates buf_currency_exchange_rates;
-    error err = create_array_of_currencies(&buf_currency_exchange_rates.currencies);
+error_t create_currency_exchange_rates(currency_exchange_rates_t *data) {
+    currency_exchange_rates_t buf_currency_exchange_rates;
+    error_t err = create_array_of_currencies(&buf_currency_exchange_rates.currencies);
     if (err)
         return MEMORY_ERROR;
 
-    buf_currency_exchange_rates.data = (offer**) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer*));
+    buf_currency_exchange_rates.data = (offer_t**) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer_t*));
     if (!buf_currency_exchange_rates.data) {
         delete_array_of_currencies(&buf_currency_exchange_rates.currencies);
         return MEMORY_ERROR;
     }
 
     for (size_t i = 0; (i < DEFAULT_ALLOCATED_SIZE); i++) {
-        buf_currency_exchange_rates.data[i] = (offer*) malloc(DEFAULT_ALLOCATED_SIZE *sizeof(offer));
+        buf_currency_exchange_rates.data[i] = (offer_t*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer_t));
         if (!buf_currency_exchange_rates.data[i]) {
             for (size_t j = 0; j < i; j++)
                 free(buf_currency_exchange_rates.data[j]);
@@ -23,7 +23,7 @@ error create_currency_exchange_rates(currency_exchange_rates *data) {
         }
     }
 
-    offer zero_offer;
+    offer_t zero_offer;
     zero_offer.bank[0] = '\0';
     zero_offer.exchange_rate = 0;
     zero_offer.bank_fee = 0;
@@ -43,7 +43,7 @@ error create_currency_exchange_rates(currency_exchange_rates *data) {
     return SUCCESS;
 }
 
-error delete_currency_exchange_rates(currency_exchange_rates *data) {
+error_t delete_currency_exchange_rates(currency_exchange_rates_t *data) {
     if ((!data->data) || (!data->allocated_size))
         return NO_DATA;
 
@@ -53,28 +53,28 @@ error delete_currency_exchange_rates(currency_exchange_rates *data) {
     data->data = NULL;
     data->size = 0;
     data->allocated_size = 0;
-    error err = delete_array_of_currencies(&data->currencies);
+    error_t err = delete_array_of_currencies(&data->currencies);
     return err;
 }
 
-error resize_currency_exchange_rates(currency_exchange_rates *data, size_t new_size) {
+error_t resize_currency_exchange_rates(currency_exchange_rates_t *data, size_t new_size) {
     if ((!data) || (!data->data) || (!data->allocated_size))
         return NO_DATA;
 
-    currency_exchange_rates buf_currency_exchange_rates;
+    currency_exchange_rates_t buf_currency_exchange_rates;
     buf_currency_exchange_rates.data = data->data;
     for (size_t i = 0; i < data->allocated_size; i++)
         buf_currency_exchange_rates.data[i] = data->data[i];
 
     size_t allocated = data->allocated_size + (new_size >> 3) + (new_size < 9 ? 3 : 6);
-    buf_currency_exchange_rates.data = (offer**) realloc(buf_currency_exchange_rates.data,
-                                                         allocated * sizeof(offer*));
+    buf_currency_exchange_rates.data = (offer_t**) realloc(buf_currency_exchange_rates.data,
+                                                         allocated * sizeof(offer_t*));
     if (!buf_currency_exchange_rates.data)
         return MEMORY_ERROR;
 
     for (size_t i = 0; i < allocated; i++) {
-        buf_currency_exchange_rates.data[i] = (offer*) realloc(buf_currency_exchange_rates.data[i],
-                                                               allocated * sizeof(offer));
+        buf_currency_exchange_rates.data[i] = (offer_t*) realloc(buf_currency_exchange_rates.data[i],
+                                                               allocated * sizeof(offer_t));
         if (!buf_currency_exchange_rates.data[i]) {
             for (size_t j = 0; j < i; j++)
                 free(buf_currency_exchange_rates.data[j]);
@@ -90,14 +90,14 @@ error resize_currency_exchange_rates(currency_exchange_rates *data, size_t new_s
     return SUCCESS;
 }
 
-error input_currency_exchange_rates(currency_exchange_rates *data, size_t number_of_offers) {
-    error err = SUCCESS;
+error_t input_currency_exchange_rates(currency_exchange_rates_t *data, size_t number_of_offers) {
+    error_t err = SUCCESS;
 
     if (data->allocated_size < number_of_offers)
         err = resize_currency_exchange_rates(data, number_of_offers);
 
     for (size_t i = 0; (!err) && (i < number_of_offers); i++) {
-        offer buf_offer;
+        offer_t buf_offer;
         err = input_offer(&buf_offer);
         if (!err) {
             int newCurrency1 = 0;
@@ -149,9 +149,9 @@ error input_currency_exchange_rates(currency_exchange_rates *data, size_t number
 }
 
 
-error dijkstra_algorithm_step(const currency_exchange_rates *data,
-                              double *distances, size_t *not_visited_nodes,
-                              size_t *max_index) {
+error_t dijkstra_algorithm_step(const currency_exchange_rates_t *data,
+                                double *distances, size_t *not_visited_nodes,
+                                size_t *max_index) {
     (*max_index) = data->currencies.size + 1;
     double max_rate = 0;
     for (size_t i = 0; i < data->currencies.size; i++)
@@ -160,7 +160,7 @@ error dijkstra_algorithm_step(const currency_exchange_rates *data,
             (*max_index) = i;
         }
 
-    error err = SUCCESS;
+    error_t err = SUCCESS;
     if ((*max_index) != data->currencies.size + 1) {
         for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++) {
             double exchange_rate;
@@ -176,10 +176,10 @@ error dijkstra_algorithm_step(const currency_exchange_rates *data,
     return err;
 }
 
-error restore_path_step(const currency_exchange_rates *data, size_t *end,
-                        double *distances, size_t *visited_nodes,
-                        size_t *last_node_index, double *weight) {
-    error err = SUCCESS;
+error_t restore_path_step(const currency_exchange_rates_t *data, size_t *end,
+                          double *distances, size_t *visited_nodes,
+                          size_t *last_node_index, double *weight) {
+    error_t err = SUCCESS;
     for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++)
         if (data->data[i][(*end)].exchange_rate) {
             double exchange_rate;
@@ -197,10 +197,10 @@ error restore_path_step(const currency_exchange_rates *data, size_t *end,
     return err;
 }
 
-error find_best_exchange_rate(const currency_exchange_rates *data,
-                              const currency_pair *currencyPair,
-                              array_of_offers *strategy,
-                              double *best_exchange_rate) {
+error_t find_best_exchange_rate(const currency_exchange_rates_t *data,
+                                const currency_pair_t *currencyPair,
+                                array_of_offers_t *strategy,
+                                double *best_exchange_rate) {
 
     if ((!data) || (!data->data) || (!data->allocated_size) ||
         (!currencyPair) || (!strategy) || (!best_exchange_rate))
@@ -239,7 +239,7 @@ error find_best_exchange_rate(const currency_exchange_rates *data,
         not_visited_nodes[i] = 1;
     }
 
-    error err = SUCCESS;
+    error_t err = SUCCESS;
     size_t max_index;
     distances[begin_index] = 1;
     do {

@@ -4,7 +4,7 @@
 
 
 TEST(currency_pair, is_equal_currency_pairs) {
-    currency_pair first, second;
+    currency_pair_t first, second;
 
     // Равны
     strcpy(first.currency_1, "USD");
@@ -20,7 +20,7 @@ TEST(currency_pair, is_equal_currency_pairs) {
 }
 
 TEST(offer, get_result_exchange_rate){
-    offer offer;
+    offer_t offer;
     strcpy(offer.bank, "test");
     strcpy(offer.currency_pair.currency_1, "USD");
     strcpy(offer.currency_pair.currency_2, "RUB");
@@ -28,22 +28,22 @@ TEST(offer, get_result_exchange_rate){
     offer.exchange_rate = 90;
 
     double result;
-    error err = get_result_exchange_rate(&offer, &result);
+    error_t err = get_result_exchange_rate(&offer, &result);
     EXPECT_EQ((fabs(result - 88.2) < EPS) && (!err), true);
 }
 
 TEST(array_of_offers, create_array_of_offers){
-    array_of_offers arr;
-    error result = create_array_of_offers(&arr);
+    array_of_offers_t arr;
+    error_t result = create_array_of_offers(&arr);
     EXPECT_EQ((result == SUCCESS) && (arr.data) && (arr.size == 0) &&
               (arr.allocated_size == DEFAULT_ALLOCATED_SIZE), true);
     delete_array_of_offers(&arr);
 }
 
 TEST(array_of_offers, delete_array_of_offers){
-    array_of_offers arr;
+    array_of_offers_t arr;
     create_array_of_offers(&arr);
-    error result;
+    error_t result;
 
     // Успешное удаление
     result = delete_array_of_offers(&arr);
@@ -56,10 +56,10 @@ TEST(array_of_offers, delete_array_of_offers){
 }
 
 TEST(array_of_offers, resize_array_of_offers){
-    array_of_offers arr;
+    array_of_offers_t arr;
     create_array_of_offers(&arr);
 
-    error result;
+    error_t result;
     // Дополнительное выделение в пустой массив
     result = resize_array_of_offers(&arr, 5);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -74,17 +74,17 @@ TEST(array_of_offers, resize_array_of_offers){
 }
 
 TEST(array_of_offers, append_into_array_of_offers){
-    array_of_offers arr;
+    array_of_offers_t arr;
     create_array_of_offers(&arr);
 
-    offer offer;
+    offer_t offer;
     strcpy(offer.bank, "test");
     strcpy(offer.currency_pair.currency_1, "USD");
     strcpy(offer.currency_pair.currency_2, "RUB");
     offer.bank_fee = 0.02;
     offer.exchange_rate = 90;
 
-    error result;
+    error_t result;
     // Добавление в пустой
     result = append_into_array_of_offers(&arr, &offer);
     EXPECT_EQ((result == SUCCESS) &&
@@ -109,17 +109,17 @@ TEST(array_of_offers, append_into_array_of_offers){
 }
 
 TEST(array_of_currencies, create_array_of_currencies){
-    array_of_currencies arr;
-    error result = create_array_of_currencies(&arr);
+    array_of_currencies_t arr;
+    error_t result = create_array_of_currencies(&arr);
     EXPECT_EQ((result == SUCCESS) && (arr.data) && (arr.size == 0) &&
               (arr.allocated_size == DEFAULT_ALLOCATED_SIZE), true);
     delete_array_of_currencies(&arr);
 }
 
 TEST(array_of_currencies, delete_array_of_currencies){
-    array_of_currencies arr;
+    array_of_currencies_t arr;
     create_array_of_currencies(&arr);
-    error result;
+    error_t result;
 
     // Успешное удаление
     result = delete_array_of_currencies(&arr);
@@ -132,10 +132,10 @@ TEST(array_of_currencies, delete_array_of_currencies){
 }
 
 TEST(array_of_currencies, resize_array_of_currencies){
-    array_of_currencies arr;
+    array_of_currencies_t arr;
     create_array_of_currencies(&arr);
 
-    error result;
+    error_t result;
     // Дополнительное выделение в пустой массив
     result = resize_array_of_currencies(&arr, 5);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -150,13 +150,13 @@ TEST(array_of_currencies, resize_array_of_currencies){
 }
 
 TEST(array_of_currencies, append_into_array_of_currencies){
-    array_of_currencies arr;
+    array_of_currencies_t arr;
     create_array_of_currencies(&arr);
 
-    currency currency;
+    currency_t currency;
     strcpy(currency, "USD");
 
-    error result;
+    error_t result;
     // Добавление в пустой
     result = append_into_array_of_currencies(&arr, &currency);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -174,10 +174,10 @@ TEST(array_of_currencies, append_into_array_of_currencies){
 }
 
 TEST(array_of_currencies, find_currency_index){
-    array_of_currencies arr;
+    array_of_currencies_t arr;
     create_array_of_currencies(&arr);
 
-    currency currency;
+    currency_t currency;
     strcpy(currency, "USD");
 
     size_t index;
@@ -203,8 +203,8 @@ TEST(array_of_currencies, find_currency_index){
 }
 
 TEST(currency_exchange_rates, create_currency_exchange_rates){
-    currency_exchange_rates data;
-    error result = create_currency_exchange_rates(&data);
+    currency_exchange_rates_t data;
+    error_t result = create_currency_exchange_rates(&data);
     EXPECT_EQ((result == SUCCESS) && (data.data) && (data.size == 0) &&
               (data.currencies.data) && (data.currencies.size == 0) &&
               (data.currencies.allocated_size == DEFAULT_ALLOCATED_SIZE) &&
@@ -213,9 +213,9 @@ TEST(currency_exchange_rates, create_currency_exchange_rates){
 }
 
 TEST(currency_exchange_rates, delete_currency_exchange_rates){
-    currency_exchange_rates data;
+    currency_exchange_rates_t data;
     create_currency_exchange_rates(&data);
-    error result;
+    error_t result;
 
     // Успешное удаление
     result = delete_currency_exchange_rates(&data);
@@ -230,7 +230,7 @@ TEST(currency_exchange_rates, delete_currency_exchange_rates){
 
 TEST(currency_exchange_rates, find_best_exchange_rate){
 
-    currency_exchange_rates data;
+    currency_exchange_rates_t data;
     // Путь есть
     create_currency_exchange_rates(&data);
     strcpy(data.currencies.data[0], "USD");
@@ -238,7 +238,7 @@ TEST(currency_exchange_rates, find_best_exchange_rate){
     strcpy(data.currencies.data[2], "RUB");
     data.currencies.size = 3;
 
-    offer offer;
+    offer_t offer;
     strcpy(offer.bank, "Tinkoff");
     strcpy(offer.currency_pair.currency_1, "USD");
     strcpy(offer.currency_pair.currency_2, "EUR");
@@ -261,15 +261,15 @@ TEST(currency_exchange_rates, find_best_exchange_rate){
     offer.bank_fee = 0.05;
     data.data[1][2] = offer;
 
-    currency_pair pair;
+    currency_pair_t pair;
     strcpy(pair.currency_1, "USD");
     strcpy(pair.currency_2, "RUB");
 
 
     double result;
-    array_of_offers arr;
+    array_of_offers_t arr;
     create_array_of_offers(&arr);
-    error err = find_best_exchange_rate(&data, &pair, &arr, &result);
+    error_t err = find_best_exchange_rate(&data, &pair, &arr, &result);
     EXPECT_EQ((fabs(result - 75.945375) < EPS) && (!err), true);
 
     // Валюты нет в списке

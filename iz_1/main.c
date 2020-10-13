@@ -3,7 +3,7 @@
 
 
 int main() {
-    error err = task_manager();
+    error_t err = task_manager();
     if (err)
         print_error_message(err);
     return err;

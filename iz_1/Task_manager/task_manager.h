@@ -8,7 +8,7 @@ extern "C" {
 #include "Errors/error_codes.h"
 #include "Exchange_of_currency/currency_exchange_rates.h"
 
-error task_manager();
+error_t task_manager();
 
 #ifdef __cplusplus
 }

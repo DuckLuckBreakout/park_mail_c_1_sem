@@ -6,15 +6,15 @@
 #include "constants.h"
 
 
-typedef struct array_of_offers {
-    offer *data;
+typedef struct array_of_offers_t {
+    offer_t *data;
     size_t size;
     size_t allocated_size;
-} array_of_offers;
+} array_of_offers_t;
 
-error create_array_of_offers(array_of_offers *arr);
-error delete_array_of_offers(array_of_offers *arr);
-error output_array_of_offers(array_of_offers *arr);
-error resize_array_of_offers(array_of_offers *arr, size_t new_size);
-error append_into_array_of_offers(array_of_offers *arr, offer *offer);
+error_t create_array_of_offers(array_of_offers_t *arr);
+error_t delete_array_of_offers(array_of_offers_t *arr);
+error_t output_array_of_offers(array_of_offers_t *arr);
+error_t resize_array_of_offers(array_of_offers_t *arr, size_t new_size);
+error_t append_into_array_of_offers(array_of_offers_t *arr, offer_t *offer);
 #endif //IZ_1_ARRAY_OF_OFFERS_H

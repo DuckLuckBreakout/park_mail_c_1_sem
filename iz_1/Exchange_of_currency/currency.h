@@ -3,6 +3,6 @@
 
 #include "constants.h"
 
-typedef char currency[CURRENCY_NAME_LEN];
+typedef char currency_t[CURRENCY_NAME_LEN];
 
 #endif //IZ_1_CURRENCY_H

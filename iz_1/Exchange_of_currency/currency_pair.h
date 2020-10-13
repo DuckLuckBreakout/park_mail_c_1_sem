@@ -7,13 +7,13 @@
 #include "Errors/error_codes.h"
 #include "constants.h"
 
-typedef struct currency_pair {
-    currency currency_1;
-    currency currency_2;
-} currency_pair;
+typedef struct currency_pair_t {
+    currency_t currency_1;
+    currency_t currency_2;
+} currency_pair_t;
 
-error input_currency_pair(currency_pair *currency_pair);
-error output_currency_pair(const currency_pair *currency_pair);
-int is_equal_currency_pairs(const currency_pair *a, const currency_pair *b);
+error_t input_currency_pair(currency_pair_t *currency_pair);
+error_t output_currency_pair(const currency_pair_t *currency_pair);
+int is_equal_currency_pairs(const currency_pair_t *a, const currency_pair_t *b);
 
 #endif //IZ_1_CURRENCY_PAIR_H

@@ -9,19 +9,19 @@
 #include "Errors/error_codes.h"
 
 
-typedef struct array_of_currencies {
-    currency *data;
+typedef struct array_of_currencies_t {
+    currency_t *data;
     size_t size;
     size_t allocated_size;
-} array_of_currencies;
+} array_of_currencies_t;
 
-error create_array_of_currencies(array_of_currencies *arr);
-error delete_array_of_currencies(array_of_currencies *arr);
-error resize_array_of_currencies(array_of_currencies *arr, size_t new_size);
-error append_into_array_of_currencies(array_of_currencies *arr,
-                                      const currency *currency);
+error_t create_array_of_currencies(array_of_currencies_t *arr);
+error_t delete_array_of_currencies(array_of_currencies_t *arr);
+error_t resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size);
+error_t append_into_array_of_currencies(array_of_currencies_t *arr,
+                                        const currency_t *currency);
 
-size_t find_currency_index(const array_of_currencies *arr,
-                           const currency *currency);
+size_t find_currency_index(const array_of_currencies_t *arr,
+                           const currency_t *currency);
 
 #endif //IZ_1_ARRAY_OF_CURRENCIES_H
