@@ -1,23 +1,20 @@
 #include "array_of_currencies.h"
 
 error create_array_of_currencies(array_of_currencies *arr) {
-    error err = SUCCESS;
+    currency *buf_currency = (currency*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(currency));
+    if (!buf_currency)
+        return MEMORY_ERROR;
 
-    currency *tmp = (currency*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(currency));
-    if (tmp) {
-        arr->data = tmp;
-        arr->size = 0;
-        arr->allocated_size = DEFAULT_ALLOCATED_SIZE;
-    }
-    else
-        err = MEMORY_ERROR;
-    return err;
+    arr->data = buf_currency;
+    arr->size = 0;
+    arr->allocated_size = DEFAULT_ALLOCATED_SIZE;
+
+    return SUCCESS;
 }
 
 error delete_array_of_currencies(array_of_currencies *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
-
 
     free(arr->data);
     arr->data = NULL;
@@ -34,19 +31,16 @@ error resize_array_of_currencies(array_of_currencies *arr, size_t new_size) {
     if (new_size < arr->allocated_size)
         return BAD_SIZE;
 
-    error err = SUCCESS;
-    currency *tmp = arr->data;
+    currency *buf_currency = arr->data;
     size_t allocated = arr->allocated_size + (new_size >> 3) + (new_size < 9 ? 3 : 6);
-    tmp = (currency*) realloc(tmp, allocated * sizeof(currency));
+    buf_currency = (currency*) realloc(buf_currency, allocated * sizeof(currency));
+    if (!buf_currency)
+        return MEMORY_ERROR;
 
-    if (tmp) {
-        arr->data = tmp;
-        arr->allocated_size = allocated;
-    }
-    else
-        err = MEMORY_ERROR;
+    arr->data = buf_currency;
+    arr->allocated_size = allocated;
 
-    return err;
+    return SUCCESS;
 }
 
 error append_into_array_of_currencies(array_of_currencies *arr,

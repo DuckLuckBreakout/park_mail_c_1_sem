@@ -1,18 +1,15 @@
 #include "array_of_offers.h"
 
 error create_array_of_offers(array_of_offers *arr) {
-    error err = SUCCESS;
+    offer *buf_offer = (offer*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer));
+    if (!buf_offer)
+        return MEMORY_ERROR;
 
-    offer *tmp = (offer*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer));
-    if (tmp){
-        arr->data = tmp;
-        arr->size = 0;
-        arr->allocated_size = DEFAULT_ALLOCATED_SIZE;
-    }
-    else
-        err = MEMORY_ERROR;
+    arr->data = buf_offer;
+    arr->size = 0;
+    arr->allocated_size = DEFAULT_ALLOCATED_SIZE;
 
-    return err;
+    return SUCCESS;
 }
 
 
@@ -54,14 +51,13 @@ error resize_array_of_offers(array_of_offers *arr, size_t new_size) {
 
     size_t allocated = arr->allocated_size + (new_size >> 3) + (new_size < 9 ? 3 : 6);
 
-    offer *tmp = arr->data;
-    tmp = (offer*) realloc(tmp, allocated * sizeof(offer));
-    if (tmp) {
-        arr->data = tmp;
-        arr->allocated_size = allocated;
-    }
-    else
+    offer *buf_offer = arr->data;
+    buf_offer = (offer*) realloc(buf_offer, allocated * sizeof(offer));
+    if (!buf_offer)
         return MEMORY_ERROR;
+
+    arr->data = buf_offer;
+    arr->allocated_size = allocated;
 
     return SUCCESS;
 }

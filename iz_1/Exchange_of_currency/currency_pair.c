@@ -1,18 +1,21 @@
 #include "currency_pair.h"
 
 error input_currency_pair(currency_pair *currency_pair) {
-    char tmp[4];
+    if (!currency_pair)
+        return NO_DATA;
+
+    currency buf_carrency;
     printf("\ncurrency_pair: ");
 
     printf("\nfirst currency: ");
-    if (scanf("%s", tmp) != 1)
+    if (scanf("%s", buf_carrency) != 1)
         return INPUT_ERROR;
-    strcpy(currency_pair->currency_1, tmp);
+    strcpy(currency_pair->currency_1, buf_carrency);
 
     printf("\nsecond currency: ");
-    if (scanf("%s", tmp) != 1)
+    if (scanf("%s", buf_carrency) != 1)
         return INPUT_ERROR;
-    strcpy(currency_pair->currency_2, tmp);
+    strcpy(currency_pair->currency_2, buf_carrency);
 
     return SUCCESS;
 }

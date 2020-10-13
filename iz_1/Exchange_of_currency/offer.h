@@ -12,6 +12,6 @@ typedef struct offer {
 
 
 error input_offer(offer *elem);
-error output_offer(const offer *elem);
+error output_offer(const offer *offer);
 error get_result_exchange_rate(const offer* offer, double *result_exchange_rate);
 #endif //IZ_1_OFFER_H
