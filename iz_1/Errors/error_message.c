@@ -1,6 +1,6 @@
 #include "error_message.h"
 
-void print_error_message(Error err) {
+void print_error_message(error err) {
     switch (err) {
         case INPUT_ERROR:
             printf("Error: input error");

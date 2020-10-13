@@ -1,26 +1,26 @@
 #include "task_manager.h"
 
-Error task_manager() {
+error task_manager() {
     printf("\nВведите число предложений: ");
     int number_of_offers;
     if ((scanf("%d", &number_of_offers) != 1) || (number_of_offers <= 0))
         return INPUT_ERROR;
 
-    CurrencyPair target_pair;
-    Error err = inputCurrencyPair(&target_pair);
+    currency_pair target_pair;
+    error err = input_currency_pair(&target_pair);
     if (err)
         return err;
 
-    CurrencyExchangeRates currencyExchangeRates;
-    createCurrencyExchangeRates(&currencyExchangeRates);
-    err = inputCurrencyExchangeRates(&currencyExchangeRates, number_of_offers);
+    currency_exchange_rates currencyExchangeRates;
+    create_currency_exchange_rates(&currencyExchangeRates);
+    err = input_currency_exchange_rates(&currencyExchangeRates, number_of_offers);
     if (err)
         return err;
 
-    ArrayOfOffers strategy;
-    err = createArrayOfOffers(&strategy);
+    array_of_offers strategy;
+    err = create_array_of_offers(&strategy);
     if (err) {
-        deleteCurrencyExchangeRates(&currencyExchangeRates);
+        delete_currency_exchange_rates(&currencyExchangeRates);
         return err;
     }
 
@@ -29,23 +29,23 @@ Error task_manager() {
 
     if (!err){
         printf("\nBest exchange rate for ");
-        err = outputCurrencyPair(&target_pair);
+        err = output_currency_pair(&target_pair);
         if (!err) {
             printf("= %lf ", best_exchange_rate);
-            err = outputArrayOfOffers(&strategy);
+            err = output_array_of_offers(&strategy);
         }
     }
 
     if (err) {
-        deleteArrayOfOffers(&strategy);
-        deleteCurrencyExchangeRates(&currencyExchangeRates);
+        delete_array_of_offers(&strategy);
+        delete_currency_exchange_rates(&currencyExchangeRates);
     }
     else {
-        err = deleteArrayOfOffers(&strategy);
+        err = delete_array_of_offers(&strategy);
         if (!err)
-            err = deleteCurrencyExchangeRates(&currencyExchangeRates);
+            err = delete_currency_exchange_rates(&currencyExchangeRates);
         else
-            deleteCurrencyExchangeRates(&currencyExchangeRates);
+            delete_currency_exchange_rates(&currencyExchangeRates);
     }
 
     return err;

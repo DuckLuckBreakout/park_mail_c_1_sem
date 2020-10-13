@@ -1,6 +1,6 @@
 #include "currency_pair.h"
 
-Error inputCurrencyPair(CurrencyPair *currency_pair) {
+error input_currency_pair(currency_pair *currency_pair) {
     char tmp[4];
     printf("\ncurrency_pair: ");
 
@@ -17,15 +17,16 @@ Error inputCurrencyPair(CurrencyPair *currency_pair) {
     return SUCCESS;
 }
 
-Error outputCurrencyPair(const CurrencyPair *currency_pair) {
+error output_currency_pair(const currency_pair *currency_pair) {
     if (!currency_pair)
         return NO_DATA;
     printf("%s/%s", currency_pair->currency_1, currency_pair->currency_2);
     return SUCCESS;
 }
 
-int isEqualCurrencyPair(const CurrencyPair *a, const CurrencyPair *b) {
+int is_equal_currency_pairs(const currency_pair *a, const currency_pair *b) {
     if ((!a) || (!b))
         return FALSE;
-    return (!strcmp(a->currency_1, b->currency_1)) && (!strcmp(a->currency_2, b->currency_2));
+    return ((!strcmp(a->currency_1, b->currency_1)) &&
+            (!strcmp(a->currency_2, b->currency_2)));
 }

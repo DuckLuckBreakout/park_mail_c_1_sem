@@ -1,9 +1,9 @@
 #include "array_of_offers.h"
 
-Error createArrayOfOffers(ArrayOfOffers *arr) {
-    Error err = SUCCESS;
+error create_array_of_offers(array_of_offers *arr) {
+    error err = SUCCESS;
 
-    Offer *tmp = (Offer*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(Offer));
+    offer *tmp = (offer*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer));
     if (tmp){
         arr->data = tmp;
         arr->size = 0;
@@ -16,7 +16,7 @@ Error createArrayOfOffers(ArrayOfOffers *arr) {
 }
 
 
-Error deleteArrayOfOffers(ArrayOfOffers *arr) {
+error delete_array_of_offers(array_of_offers *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -28,14 +28,14 @@ Error deleteArrayOfOffers(ArrayOfOffers *arr) {
     return SUCCESS;
 }
 
-Error outputArrayOfOffers(ArrayOfOffers *arr) {
+error output_array_of_offers(array_of_offers *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
-    Error err = SUCCESS;
+    error err = SUCCESS;
     printf("\n[");
     for (size_t i = 0; ((i < arr->size) && (!err)); i++) {
-        err = outputOffer(&arr->data[i]);
+        err = output_offer(&arr->data[i]);
         if (i + 1 < arr->size)
             printf(",");
     }
@@ -45,7 +45,7 @@ Error outputArrayOfOffers(ArrayOfOffers *arr) {
 }
 
 
-Error resizeArrayOfOffers(ArrayOfOffers *arr, size_t new_size) {
+error resize_array_of_offers(array_of_offers *arr, size_t new_size) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -54,8 +54,8 @@ Error resizeArrayOfOffers(ArrayOfOffers *arr, size_t new_size) {
 
     size_t allocated = arr->allocated_size + (new_size >> 3) + (new_size < 9 ? 3 : 6);
 
-    Offer *tmp = arr->data;
-    tmp = (Offer*) realloc(tmp, allocated * sizeof(Offer));
+    offer *tmp = arr->data;
+    tmp = (offer*) realloc(tmp, allocated * sizeof(offer));
     if (tmp) {
         arr->data = tmp;
         arr->allocated_size = allocated;
@@ -66,16 +66,16 @@ Error resizeArrayOfOffers(ArrayOfOffers *arr, size_t new_size) {
     return SUCCESS;
 }
 
-Error appendIntoArrayOfOffers(ArrayOfOffers *arr, Offer *offer) {
+error append_into_array_of_offers(array_of_offers *arr, offer *offer) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size) || (!offer))
         return NO_DATA;
 
     if (arr->size > arr->allocated_size)
         return MEMORY_ERROR;
 
-    Error err = SUCCESS;
+    error err = SUCCESS;
     if (arr->size == arr->allocated_size)
-        err = resizeArrayOfOffers(arr, arr->size + 1);
+        err = resize_array_of_offers(arr, arr->size + 1);
 
     if (!err) {
         arr->data[arr->size] = *offer;
