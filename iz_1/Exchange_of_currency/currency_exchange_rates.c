@@ -106,6 +106,8 @@ error input_currency_exchange_rates(currency_exchange_rates *data, size_t number
                                                 &tmp.currency_pair.currency_1);
                 row_index = data->currencies.size - 1;
                 newCurrency1 = 1;
+
+                data->size++;
             }
 
             int newCurrency2 = 0;
@@ -116,6 +118,8 @@ error input_currency_exchange_rates(currency_exchange_rates *data, size_t number
                                                 &tmp.currency_pair.currency_2);
                 column_index = data->currencies.size - 1;
                 newCurrency2 = 1;
+
+                data->size++;
             }
 
             if (newCurrency1 || newCurrency2) {
@@ -142,6 +146,52 @@ error input_currency_exchange_rates(currency_exchange_rates *data, size_t number
     return err;
 }
 
+
+error dijkstra_algorithm_step(const currency_exchange_rates *data,
+                              double *d, size_t *v, size_t *max_index) {
+    (*max_index) = data->currencies.size + 1;
+    double max_rate = 0;
+    for (size_t i = 0; i < data->currencies.size; i++)
+        if ((v[i] == 1) && (d[i] > max_rate)) {
+            max_rate = d[i];
+            (*max_index) = i;
+        }
+
+    error err = SUCCESS;
+    if ((*max_index) != data->currencies.size + 1) {
+        for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++) {
+            double tmp;
+            err = get_result_exchange_rate(&data->data[(*max_index)][i], &tmp);
+            if ((!err) && (tmp > 0))
+                tmp *= max_rate;
+
+            if ((!err) && ((tmp > d[i]) || (!d[i])))
+                d[i] = tmp;
+        }
+        v[(*max_index)] = 0;
+    }
+    return err;
+}
+
+error restore_path_step(const currency_exchange_rates *data, size_t *end,
+                        double *d, size_t *ver, size_t *k, double *weight) {
+    error err = SUCCESS;
+    for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++)
+        if (data->data[i][(*end)].exchange_rate) {
+            double tmp;
+            err = get_result_exchange_rate(&data->data[i][(*end)], &tmp);
+            if (!err) {
+                tmp = (*weight) / tmp;
+                if ((fabs(tmp - d[i]) - EPS) < 0) {
+                    (*weight) = tmp;
+                    (*end) = i;
+                    ver[(*k)] = i;
+                    (*k)++;
+                }
+            }
+        }
+    return err;
+}
 
 error find_best_exchange_rate(const currency_exchange_rates *data,
                               const currency_pair *currencyPair,
@@ -180,7 +230,6 @@ error find_best_exchange_rate(const currency_exchange_rates *data,
     }
 
 
-
     for (size_t i = 0; i < data->currencies.size; i++) {
         d[i] = 0;
         v[i] = 1;
@@ -190,26 +239,7 @@ error find_best_exchange_rate(const currency_exchange_rates *data,
     size_t max_index;
     d[begin_index] = 1;
     do {
-        max_index = data->currencies.size + 1;
-        double max_rate = 0;
-        for (size_t i = 0; i < data->currencies.size; i++)
-            if ((v[i] == 1) && (d[i] > max_rate)) {
-                max_rate = d[i];
-                max_index = i;
-            }
-
-        if (max_index != data->currencies.size + 1) {
-            for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++) {
-                double tmp;
-                err = get_result_exchange_rate(&data->data[max_index][i], &tmp);
-                if ((tmp > 0) && (!err)) {
-                    tmp *= max_rate;
-                    if ((tmp > d[i]) || (!d[i]))
-                        d[i] = tmp;
-                }
-            }
-            v[max_index] = 0;
-        }
+        err = dijkstra_algorithm_step(data, d, v, &max_index);
     } while ((!err) && (max_index < data->currencies.size + 1));
 
     // Восстановление пути
@@ -218,21 +248,9 @@ error find_best_exchange_rate(const currency_exchange_rates *data,
     size_t k = 1;
     double weight = d[end];
 
-    while ((end != begin_index) && (!err))
-        for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++)
-            if (data->data[i][end].exchange_rate) {
-                double tmp;
-                err = get_result_exchange_rate(&data->data[i][end], &tmp);
-                if (!err) {
-                    tmp = weight / tmp;
-                    if ((fabs(tmp - d[i]) - EPS) < 0) {
-                        weight = tmp;
-                        end = i;
-                        ver[k] = i;
-                        k++;
-                    }
-                }
-            }
+    while ((end != begin_index) && (!err)) {
+        err = restore_path_step(data, &end, d, ver, &k, &weight);
+    }
 
     for (size_t i = k - 1; ((!err) && (i > 0)); i--)
         err = append_into_array_of_offers(strategy, &data->data[ver[i]][ver[i - 1]]);
