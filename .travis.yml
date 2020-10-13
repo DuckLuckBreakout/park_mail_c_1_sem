@@ -17,6 +17,7 @@ install:
   - source ci/travis/install-linux.sh
 
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Test ./iz_1/
+  - cd iz_1
+  - cmake -DCMAKE_BUILD_TYPE=Test ./
   - make
-  - valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./iz_1/iz_1
+  - valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./iz_1
