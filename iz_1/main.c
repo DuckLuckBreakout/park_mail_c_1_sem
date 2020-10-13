@@ -5,6 +5,6 @@
 int main() {
     Error err = task_manager();
     if (err)
-        error_message(err);
+        print_error_message(err);
     return err;
 }

@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include "error_codes.h"
 
-void error_message(Error err);
+void print_error_message(Error err);
 
 #endif //IZ_1_ERROR_MESSAGE_H
