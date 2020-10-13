@@ -15,11 +15,11 @@ typedef struct array_of_currencies_t {
     size_t allocated_size;
 } array_of_currencies_t;
 
-error_t create_array_of_currencies(array_of_currencies_t *arr);
-error_t delete_array_of_currencies(array_of_currencies_t *arr);
-error_t resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size);
-error_t append_into_array_of_currencies(array_of_currencies_t *arr,
-                                        const currency_t *currency);
+error create_array_of_currencies(array_of_currencies_t *arr);
+error delete_array_of_currencies(array_of_currencies_t *arr);
+error resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size);
+error append_into_array_of_currencies(array_of_currencies_t *arr,
+                                      const currency_t *currency);
 
 size_t find_currency_index(const array_of_currencies_t *arr,
                            const currency_t *currency);

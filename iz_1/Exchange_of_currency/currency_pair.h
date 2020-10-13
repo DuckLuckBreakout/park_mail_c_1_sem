@@ -12,8 +12,8 @@ typedef struct currency_pair_t {
     currency_t currency_2;
 } currency_pair_t;
 
-error_t input_currency_pair(currency_pair_t *currency_pair);
-error_t output_currency_pair(const currency_pair_t *currency_pair);
+error input_currency_pair(currency_pair_t *currency_pair);
+error output_currency_pair(const currency_pair_t *currency_pair);
 int is_equal_currency_pairs(const currency_pair_t *a, const currency_pair_t *b);
 
 #endif //IZ_1_CURRENCY_PAIR_H

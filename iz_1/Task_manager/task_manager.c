@@ -1,13 +1,13 @@
 #include "task_manager.h"
 
-error_t task_manager() {
+error task_manager() {
     printf("\nВведите число предложений: ");
     int number_of_offers;
     if ((scanf("%d", &number_of_offers) != 1) || (number_of_offers <= 0))
         return INPUT_ERROR;
 
     currency_pair_t target_pair;
-    error_t err = input_currency_pair(&target_pair);
+    error err = input_currency_pair(&target_pair);
     if (err)
         return err;
 

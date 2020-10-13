@@ -1,6 +1,6 @@
 #include "array_of_currencies.h"
 
-error_t create_array_of_currencies(array_of_currencies_t *arr) {
+error create_array_of_currencies(array_of_currencies_t *arr) {
     currency_t *buf_currency = (currency_t*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(currency_t));
     if (!buf_currency)
         return MEMORY_ERROR;
@@ -12,7 +12,7 @@ error_t create_array_of_currencies(array_of_currencies_t *arr) {
     return SUCCESS;
 }
 
-error_t delete_array_of_currencies(array_of_currencies_t *arr) {
+error delete_array_of_currencies(array_of_currencies_t *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -24,7 +24,7 @@ error_t delete_array_of_currencies(array_of_currencies_t *arr) {
     return SUCCESS;
 }
 
-error_t resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size) {
+error resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -43,9 +43,9 @@ error_t resize_array_of_currencies(array_of_currencies_t *arr, size_t new_size) 
     return SUCCESS;
 }
 
-error_t append_into_array_of_currencies(array_of_currencies_t *arr,
-                                        const currency_t *currency) {
-    error_t err = SUCCESS;
+error append_into_array_of_currencies(array_of_currencies_t *arr,
+                                      const currency_t *currency) {
+    error err = SUCCESS;
 
     if (arr->size == arr->allocated_size)
         err = resize_array_of_currencies(arr, arr->size + 1);

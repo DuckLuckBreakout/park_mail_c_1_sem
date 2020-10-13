@@ -11,7 +11,7 @@ typedef struct offer_t {
 } offer_t;
 
 
-error_t input_offer(offer_t *elem);
-error_t output_offer(const offer_t *offer);
-error_t get_result_exchange_rate(const offer_t* offer, double *result_exchange_rate);
+error input_offer(offer_t *elem);
+error output_offer(const offer_t *offer);
+error get_result_exchange_rate(const offer_t* offer, double *result_exchange_rate);
 #endif //IZ_1_OFFER_H

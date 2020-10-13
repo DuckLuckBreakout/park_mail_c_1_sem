@@ -1,13 +1,13 @@
 #include "offer.h"
 
-error_t input_offer(offer_t *elem){
+error input_offer(offer_t *elem){
     offer_t buf_offer;
 
     puts("bank: ");
     if (scanf("%s", buf_offer.bank) != 1)
         return INPUT_ERROR;
 
-    error_t err = input_currency_pair(&buf_offer.currency_pair);
+    error err = input_currency_pair(&buf_offer.currency_pair);
     if (err)
         return err;
 
@@ -29,14 +29,14 @@ error_t input_offer(offer_t *elem){
     return SUCCESS;
 }
 
-error_t output_offer(const offer_t *offer) {
+error output_offer(const offer_t *offer) {
     if (!offer)
         return NO_DATA;
 
     printf("\n\t{\n");
     printf("\t\t\"bank\": \"%s\", \n", offer->bank);
     printf("\t\t\"currency_pair\": \"");
-    error_t err = output_currency_pair(&offer->currency_pair);
+    error err = output_currency_pair(&offer->currency_pair);
     printf("\",\n");
     printf("\t\t\"exchange_rate\": %lf,\n", offer->exchange_rate);
     printf("\t\t\"bank_fee\": %lf\n", offer->bank_fee);
@@ -44,7 +44,7 @@ error_t output_offer(const offer_t *offer) {
     return err;
 }
 
-error_t get_result_exchange_rate(const offer_t* offer, double *result_exchange_rate) {
+error get_result_exchange_rate(const offer_t* offer, double *result_exchange_rate) {
     if (!offer)
         return NO_DATA;
 

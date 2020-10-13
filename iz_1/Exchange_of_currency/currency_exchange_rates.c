@@ -1,8 +1,8 @@
 #include "currency_exchange_rates.h"
 
-error_t create_currency_exchange_rates(currency_exchange_rates_t *data) {
+error create_currency_exchange_rates(currency_exchange_rates_t *data) {
     currency_exchange_rates_t buf_currency_exchange_rates;
-    error_t err = create_array_of_currencies(&buf_currency_exchange_rates.currencies);
+    error err = create_array_of_currencies(&buf_currency_exchange_rates.currencies);
     if (err)
         return MEMORY_ERROR;
 
@@ -43,7 +43,7 @@ error_t create_currency_exchange_rates(currency_exchange_rates_t *data) {
     return SUCCESS;
 }
 
-error_t delete_currency_exchange_rates(currency_exchange_rates_t *data) {
+error delete_currency_exchange_rates(currency_exchange_rates_t *data) {
     if ((!data->data) || (!data->allocated_size))
         return NO_DATA;
 
@@ -53,11 +53,11 @@ error_t delete_currency_exchange_rates(currency_exchange_rates_t *data) {
     data->data = NULL;
     data->size = 0;
     data->allocated_size = 0;
-    error_t err = delete_array_of_currencies(&data->currencies);
+    error err = delete_array_of_currencies(&data->currencies);
     return err;
 }
 
-error_t resize_currency_exchange_rates(currency_exchange_rates_t *data, size_t new_size) {
+error resize_currency_exchange_rates(currency_exchange_rates_t *data, size_t new_size) {
     if ((!data) || (!data->data) || (!data->allocated_size))
         return NO_DATA;
 
@@ -90,8 +90,8 @@ error_t resize_currency_exchange_rates(currency_exchange_rates_t *data, size_t n
     return SUCCESS;
 }
 
-error_t input_currency_exchange_rates(currency_exchange_rates_t *data, size_t number_of_offers) {
-    error_t err = SUCCESS;
+error input_currency_exchange_rates(currency_exchange_rates_t *data, size_t number_of_offers) {
+    error err = SUCCESS;
 
     if (data->allocated_size < number_of_offers)
         err = resize_currency_exchange_rates(data, number_of_offers);
@@ -149,9 +149,9 @@ error_t input_currency_exchange_rates(currency_exchange_rates_t *data, size_t nu
 }
 
 
-error_t dijkstra_algorithm_step(const currency_exchange_rates_t *data,
-                                double *distances, size_t *not_visited_nodes,
-                                size_t *max_index) {
+error dijkstra_algorithm_step(const currency_exchange_rates_t *data,
+                              double *distances, size_t *not_visited_nodes,
+                              size_t *max_index) {
     (*max_index) = data->currencies.size + 1;
     double max_rate = 0;
     for (size_t i = 0; i < data->currencies.size; i++)
@@ -160,7 +160,7 @@ error_t dijkstra_algorithm_step(const currency_exchange_rates_t *data,
             (*max_index) = i;
         }
 
-    error_t err = SUCCESS;
+    error err = SUCCESS;
     if ((*max_index) != data->currencies.size + 1) {
         for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++) {
             double exchange_rate;
@@ -176,10 +176,10 @@ error_t dijkstra_algorithm_step(const currency_exchange_rates_t *data,
     return err;
 }
 
-error_t restore_path_step(const currency_exchange_rates_t *data, size_t *end,
-                          double *distances, size_t *visited_nodes,
-                          size_t *last_node_index, double *weight) {
-    error_t err = SUCCESS;
+error restore_path_step(const currency_exchange_rates_t *data, size_t *end,
+                        double *distances, size_t *visited_nodes,
+                        size_t *last_node_index, double *weight) {
+    error err = SUCCESS;
     for (size_t i = 0; ((!err) && (i < data->currencies.size)); i++)
         if (data->data[i][(*end)].exchange_rate) {
             double exchange_rate;
@@ -197,10 +197,10 @@ error_t restore_path_step(const currency_exchange_rates_t *data, size_t *end,
     return err;
 }
 
-error_t find_best_exchange_rate(const currency_exchange_rates_t *data,
-                                const currency_pair_t *currencyPair,
-                                array_of_offers_t *strategy,
-                                double *best_exchange_rate) {
+error find_best_exchange_rate(const currency_exchange_rates_t *data,
+                              const currency_pair_t *currencyPair,
+                              array_of_offers_t *strategy,
+                              double *best_exchange_rate) {
 
     if ((!data) || (!data->data) || (!data->allocated_size) ||
         (!currencyPair) || (!strategy) || (!best_exchange_rate))
@@ -239,7 +239,7 @@ error_t find_best_exchange_rate(const currency_exchange_rates_t *data,
         not_visited_nodes[i] = 1;
     }
 
-    error_t err = SUCCESS;
+    error err = SUCCESS;
     size_t max_index;
     distances[begin_index] = 1;
     do {

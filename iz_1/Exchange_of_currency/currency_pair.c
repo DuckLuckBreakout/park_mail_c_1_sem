@@ -1,6 +1,6 @@
 #include "currency_pair.h"
 
-error_t input_currency_pair(currency_pair_t *currency_pair) {
+error input_currency_pair(currency_pair_t *currency_pair) {
     if (!currency_pair)
         return NO_DATA;
 
@@ -20,7 +20,7 @@ error_t input_currency_pair(currency_pair_t *currency_pair) {
     return SUCCESS;
 }
 
-error_t output_currency_pair(const currency_pair_t *currency_pair) {
+error output_currency_pair(const currency_pair_t *currency_pair) {
     if (!currency_pair)
         return NO_DATA;
     printf("%s/%s", currency_pair->currency_1, currency_pair->currency_2);

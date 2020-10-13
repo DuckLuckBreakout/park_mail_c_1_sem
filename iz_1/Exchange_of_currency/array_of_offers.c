@@ -1,6 +1,6 @@
 #include "array_of_offers.h"
 
-error_t create_array_of_offers(array_of_offers_t *arr) {
+error create_array_of_offers(array_of_offers_t *arr) {
     offer_t *buf_offer = (offer_t*) malloc(DEFAULT_ALLOCATED_SIZE * sizeof(offer_t));
     if (!buf_offer)
         return MEMORY_ERROR;
@@ -13,7 +13,7 @@ error_t create_array_of_offers(array_of_offers_t *arr) {
 }
 
 
-error_t delete_array_of_offers(array_of_offers_t *arr) {
+error delete_array_of_offers(array_of_offers_t *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -25,11 +25,11 @@ error_t delete_array_of_offers(array_of_offers_t *arr) {
     return SUCCESS;
 }
 
-error_t output_array_of_offers(array_of_offers_t *arr) {
+error output_array_of_offers(array_of_offers_t *arr) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
-    error_t err = SUCCESS;
+    error err = SUCCESS;
     printf("\n[");
     for (size_t i = 0; ((i < arr->size) && (!err)); i++) {
         err = output_offer(&arr->data[i]);
@@ -42,7 +42,7 @@ error_t output_array_of_offers(array_of_offers_t *arr) {
 }
 
 
-error_t resize_array_of_offers(array_of_offers_t *arr, size_t new_size) {
+error resize_array_of_offers(array_of_offers_t *arr, size_t new_size) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size))
         return NO_DATA;
 
@@ -62,14 +62,14 @@ error_t resize_array_of_offers(array_of_offers_t *arr, size_t new_size) {
     return SUCCESS;
 }
 
-error_t append_into_array_of_offers(array_of_offers_t *arr, offer_t *offer) {
+error append_into_array_of_offers(array_of_offers_t *arr, offer_t *offer) {
     if ((!arr) || (!arr->data) || (!arr->allocated_size) || (!offer))
         return NO_DATA;
 
     if (arr->size > arr->allocated_size)
         return MEMORY_ERROR;
 
-    error_t err = SUCCESS;
+    error err = SUCCESS;
     if (arr->size == arr->allocated_size)
         err = resize_array_of_offers(arr, arr->size + 1);
 

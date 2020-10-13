@@ -28,13 +28,13 @@ TEST(offer, get_result_exchange_rate){
     offer.exchange_rate = 90;
 
     double result;
-    error_t err = get_result_exchange_rate(&offer, &result);
+    error err = get_result_exchange_rate(&offer, &result);
     EXPECT_EQ((fabs(result - 88.2) < EPS) && (!err), true);
 }
 
 TEST(array_of_offers, create_array_of_offers){
     array_of_offers_t arr;
-    error_t result = create_array_of_offers(&arr);
+    error result = create_array_of_offers(&arr);
     EXPECT_EQ((result == SUCCESS) && (arr.data) && (arr.size == 0) &&
               (arr.allocated_size == DEFAULT_ALLOCATED_SIZE), true);
     delete_array_of_offers(&arr);
@@ -43,7 +43,7 @@ TEST(array_of_offers, create_array_of_offers){
 TEST(array_of_offers, delete_array_of_offers){
     array_of_offers_t arr;
     create_array_of_offers(&arr);
-    error_t result;
+    error result;
 
     // Успешное удаление
     result = delete_array_of_offers(&arr);
@@ -59,7 +59,7 @@ TEST(array_of_offers, resize_array_of_offers){
     array_of_offers_t arr;
     create_array_of_offers(&arr);
 
-    error_t result;
+    error result;
     // Дополнительное выделение в пустой массив
     result = resize_array_of_offers(&arr, 5);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -84,7 +84,7 @@ TEST(array_of_offers, append_into_array_of_offers){
     offer.bank_fee = 0.02;
     offer.exchange_rate = 90;
 
-    error_t result;
+    error result;
     // Добавление в пустой
     result = append_into_array_of_offers(&arr, &offer);
     EXPECT_EQ((result == SUCCESS) &&
@@ -110,7 +110,7 @@ TEST(array_of_offers, append_into_array_of_offers){
 
 TEST(array_of_currencies, create_array_of_currencies){
     array_of_currencies_t arr;
-    error_t result = create_array_of_currencies(&arr);
+    error result = create_array_of_currencies(&arr);
     EXPECT_EQ((result == SUCCESS) && (arr.data) && (arr.size == 0) &&
               (arr.allocated_size == DEFAULT_ALLOCATED_SIZE), true);
     delete_array_of_currencies(&arr);
@@ -119,7 +119,7 @@ TEST(array_of_currencies, create_array_of_currencies){
 TEST(array_of_currencies, delete_array_of_currencies){
     array_of_currencies_t arr;
     create_array_of_currencies(&arr);
-    error_t result;
+    error result;
 
     // Успешное удаление
     result = delete_array_of_currencies(&arr);
@@ -135,7 +135,7 @@ TEST(array_of_currencies, resize_array_of_currencies){
     array_of_currencies_t arr;
     create_array_of_currencies(&arr);
 
-    error_t result;
+    error result;
     // Дополнительное выделение в пустой массив
     result = resize_array_of_currencies(&arr, 5);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -156,7 +156,7 @@ TEST(array_of_currencies, append_into_array_of_currencies){
     currency_t currency;
     strcpy(currency, "USD");
 
-    error_t result;
+    error result;
     // Добавление в пустой
     result = append_into_array_of_currencies(&arr, &currency);
     EXPECT_EQ(((result == SUCCESS) &&
@@ -204,7 +204,7 @@ TEST(array_of_currencies, find_currency_index){
 
 TEST(currency_exchange_rates, create_currency_exchange_rates){
     currency_exchange_rates_t data;
-    error_t result = create_currency_exchange_rates(&data);
+    error result = create_currency_exchange_rates(&data);
     EXPECT_EQ((result == SUCCESS) && (data.data) && (data.size == 0) &&
               (data.currencies.data) && (data.currencies.size == 0) &&
               (data.currencies.allocated_size == DEFAULT_ALLOCATED_SIZE) &&
@@ -215,7 +215,7 @@ TEST(currency_exchange_rates, create_currency_exchange_rates){
 TEST(currency_exchange_rates, delete_currency_exchange_rates){
     currency_exchange_rates_t data;
     create_currency_exchange_rates(&data);
-    error_t result;
+    error result;
 
     // Успешное удаление
     result = delete_currency_exchange_rates(&data);
@@ -269,7 +269,7 @@ TEST(currency_exchange_rates, find_best_exchange_rate){
     double result;
     array_of_offers_t arr;
     create_array_of_offers(&arr);
-    error_t err = find_best_exchange_rate(&data, &pair, &arr, &result);
+    error err = find_best_exchange_rate(&data, &pair, &arr, &result);
     EXPECT_EQ((fabs(result - 75.945375) < EPS) && (!err), true);
 
     // Валюты нет в списке
