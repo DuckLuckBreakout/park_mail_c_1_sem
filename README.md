@@ -1,1 +1,2 @@
-# park_mail_c_1_sem
+[![Build Status](https://travis-ci.org/DuckLuckBreakout/park_mail_c_1_sem.svg?branch=iz_2)](https://travis-ci.org/DuckLuckBreakout/park_mail_c_1_sem)
+[![codecov](https://codecov.io/gh/DuckLuckBreakout/park_mail_c_1_sem/branch/iz_2/graph/badge.svg?token=5RRTV5L1VE)](undefined)
