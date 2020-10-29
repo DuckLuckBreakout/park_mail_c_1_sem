@@ -1,0 +1,13 @@
+#ifndef IZ_2_CONSTANTS_H
+#define IZ_2_CONSTANTS_H
+
+#define OBJECT_NAME_MAX_LEN 10
+#define FILE_NAME_MAX_LEN 10
+#define DEFAULT_ALLOCATED_SIZE 4
+#define RATING_SIZE 10
+#define EPS 1e-6
+#define FALSE 0
+#define TRUE 1
+
+
+#endif //IZ_2_CONSTANTS_H
